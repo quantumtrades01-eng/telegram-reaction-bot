@@ -16,7 +16,7 @@ if not BOT_TOKEN:
     raise RuntimeError("BOT_TOKEN environment variable is not set")
 
 # Emojis to react with
-EMOJIS = ["❤️", "🔥", "🚀", "😄"]
+EMOJIS = ["❤️", "🔥", "🚀", "😄", "💯", "📈", "⚡"]
 
 async def react_to_channel_post(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message = update.channel_post
@@ -46,3 +46,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
