@@ -1,6 +1,6 @@
-import asyncio
 import random
 import os
+import asyncio
 from telegram import Update, ReactionTypeEmoji
 from telegram.ext import (
     ApplicationBuilder,
@@ -9,7 +9,7 @@ from telegram.ext import (
     filters,
 )
 
-# Get bot token from environment variable
+# Read bot token from Render environment variable
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 if not BOT_TOKEN:
@@ -23,7 +23,7 @@ async def react_to_channel_post(update: Update, context: ContextTypes.DEFAULT_TY
     if not message:
         return
 
-    # Random delay for natural behavior
+    # Random delay to look natural
     await asyncio.sleep(random.randint(2, 8))
 
     reactions = [ReactionTypeEmoji(emoji=e) for e in EMOJIS]
@@ -34,18 +34,15 @@ async def react_to_channel_post(update: Update, context: ContextTypes.DEFAULT_TY
         reaction=reactions
     )
 
-async def main():
+def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
-    channel_handler = MessageHandler(
-        filters.ChatType.CHANNEL,
-        react_to_channel_post
+    app.add_handler(
+        MessageHandler(filters.ChatType.CHANNEL, react_to_channel_post)
     )
 
-    app.add_handler(channel_handler)
-
     print("🤖 Reaction Bot is running...")
-    await app.run_polling()
+    app.run_polling()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
